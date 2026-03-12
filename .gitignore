@@ -1,0 +1,16 @@
+.ralph-logs/
+.ralph-worktrees/
+.ralph-build-cache/
+target/
+build/
+dist/
+out/
+.next/
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+.cargo/
+*.class
+bin/
+obj/

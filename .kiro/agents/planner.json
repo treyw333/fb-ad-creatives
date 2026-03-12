@@ -1,0 +1,32 @@
+{
+  "name": "planner",
+  "description": "Analyzes task dependencies and builds execution DAGs with model assignments",
+  "model": "claude-opus-4.6",
+  "tools": ["*"],
+  "allowedTools": [
+    "fs_read",
+    "fs_write",
+    "fs_*",
+    "execute_bash",
+    "execute_*",
+    "use_aws",
+    "knowledge",
+    "thinking",
+    "todo_list",
+    "introspect",
+    "report_issue",
+    "@*"
+  ],
+  "toolsSettings": {
+    "fs_read": {
+      "allowedPaths": ["**"]
+    },
+    "fs_write": {
+      "allowedPaths": ["**"]
+    },
+    "execute_bash": {
+      "allowedCommands": [".*"]
+    }
+  },
+  "prompt": "You are a dependency analysis expert. Your ONLY job is to read a tasks.md file and output a JSON DAG.\n\nCRITICAL: Your response must be ONLY a valid JSON object. No markdown fences. No explanation. No preamble. Just JSON.\n\nRules:\n1. Include EVERY task marked with [ ] (incomplete) — only leaf tasks (1.1, 2.3), not parent headers\n2. Tasks writing to the same file cannot be parallel\n3. Sequential subtasks (2.1, 2.2, 2.3) have implicit ordering within their group\n4. Setup tasks have no dependencies; tests depend on their implementation\n5. Checkpoint tasks (like '3. Checkpoint') ARE executable leaf tasks\n\nModel assignment — ONLY use exact names from the provided list. The caller will specify which models are available.\n- WARNING: 'claude-opus-4.5' does NOT exist\n\nSchema: {\"waves\":[{\"id\":0,\"tasks\":[{\"id\":\"1.1\",\"description\":\"...\",\"parent\":\"1\",\"dependencies\":[],\"model\":\"<model-from-list>\"}]}]}"
+}
