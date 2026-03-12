@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Auto Commit & Push",
+  "description": "When the agent finishes working, review the changes and if they are significant (not just whitespace or minor formatting), commit and push to GitHub with a descriptive message.",
+  "version": "1",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Check `git diff --stat` for any uncommitted changes. If there are meaningful changes (not just whitespace), create a concise descriptive commit message, then run `git add -A && git commit -m \"message\"` followed by `git push`. If there are no changes or only trivial whitespace changes, skip the commit."
+  }
+}
